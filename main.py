@@ -91,6 +91,10 @@ if __name__ == '__main__':  # 只有在 main 中才能开多线程
             with torch.no_grad():
                 output_value = myNet(input_)
             for output_value, target_value in zip(output_value, target_value):
+                #自己加的
+                output_value_np = output_value.cpu().numpy()  # 将 output_value 转换为 numpy 数组
+                target_value_np = target_value.cpu().numpy()  # 将 target_value 转换为 numpy 数组
+
                 psnr_val_rgb.append(psnr(output_value, target_value))
 
         psnr_val_rgb = torch.stack(psnr_val_rgb).mean().item()

@@ -3,19 +3,19 @@ class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         self.inconv = nn.Sequential(  # 输入层网络
-            nn.Conv2d(32, 18, 3, 1, 1),
+            nn.Conv2d(3, 16, 3, 1, 1),
             nn.ReLU(inplace=True)
         )
         self.midconv = nn.Sequential(  # 中间层网络
-            nn.Conv2d(32, 18, 3, 1, 1),
+            nn.Conv2d(16, 32, 3, 1, 1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(32, 18, 3, 1, 1),
+            nn.Conv2d(32, 64, 3, 1, 1),
             nn.ReLU(inplace=True),
-            nn.Conv2d(32, 18, 3, 1, 1),
+            nn.Conv2d(64, 128, 3, 1, 1),
             nn.ReLU(inplace=True),
         )
         self.outconv = nn.Sequential(  # 输出层网络
-            nn.Conv2d(32, 18, 3, 1, 1),
+            nn.Conv2d(128, 3, 3, 1, 1),
         )
 
     def forward(self, x):
