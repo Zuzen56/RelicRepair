@@ -8,24 +8,6 @@ from torch.utils.data import Dataset
 from PIL import Image
 import numpy as np
 
-def psnr(output_value,target_value):
-    # Assuming output_value and target_value are torch tensors
-    output_value_np = output_value.cpu().detach().numpy()
-    target_value_np = target_value.cpu().detach().numpy()
-
-    # Calculate the mean squared error (MSE)
-    mse = np.mean((output_value_np - target_value_np) ** 2)
-
-    # Calculate the maximum possible pixel value
-    max_pixel_value = 1.0  # If the pixel values are between 0 and 1
-
-    # Calculate PSNR
-    psnr = 20 * np.log10(max_pixel_value) - 10 * np.log10(mse)
-
-    psnr = torch.tensor(psnr)
-
-    return psnr
-
 
 class MyTrainDataSet(Dataset):  # 训练数据集
     def __init__(self, inputPathTrain, targetPathTrain, patch_size=128):

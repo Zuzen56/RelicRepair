@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from torchvision.utils import save_image
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import MultiStepLR
-import utils
+from utils import *
 from NetModel import Net
 from MyDataset import *
 from skimage.metrics import peak_signal_noise_ratio
@@ -19,9 +19,9 @@ from skimage.metrics import structural_similarity
 
 
 if __name__ == '__main__':  # 只有在 main 中才能开多线程
-    EPOCH = 100  # 训练次数
-    BATCH_SIZE = 18  # 每批的训练数量
-    LEARNING_RATE = 1e-3  # 学习率
+    EPOCH = 50  # 训练次数
+    BATCH_SIZE = 16  # 每批的训练数量
+    LEARNING_RATE = 0.0001  # 学习率
     loss_list = []  # 损失存储数组
     best_psnr = 0  # 训练最好的峰值信噪比
     best_epoch = 0  # 峰值信噪比最好时的 epoch
@@ -32,7 +32,7 @@ if __name__ == '__main__':  # 只有在 main 中才能开多线程
     inputPathTest = 'D:/PycharmProjects/RelicRepair/testInput'  # 测试输入图片路径
     targetPathTest = 'D:/PycharmProjects/RelicRepair/testTarget'  # 测试目标图片路径
 
-    resultPathTest = 'D:/PycharmProjects/RelicRepair/Output'  # 测试结果图片路径
+    resultPathTest = 'D:/PycharmProjects/RelicRepair/Output/'  # 测试结果图片路径
 
     myNet = Net()  # 实例化网络
     myNet = myNet.cuda()  # 网络放入GPU中
@@ -123,7 +123,7 @@ if __name__ == '__main__':  # 只有在 main 中才能开多线程
             torch.cuda.empty_cache()  # 释放显存
             input_test = x.cuda()  # 放入GPU
             output_test = myNet(input_test)  # 输入网络，得到输出
-            save_image(output_test, resultPathTest + str(index + 1).zfill(3) + tail)  # 保存网络输出结果
+            save_image(output_test, resultPathTest + str(index + 1).zfill(3) + '.png')  # 保存网络输出结果
         timeEnd = time.time()  # 测试结束时间
         print('---------------------------------------------------------')
         print("Testing Process Finished !!! Time: {:.4f} s".format(timeEnd - timeStart))

@@ -25,7 +25,7 @@ def crop_large_images(input_folder, output_folder, crop_size):
 
 if __name__ == "__main__":
     input_folder = "input_image"
-    output_folder = "output_image"
+    output_folder = "cut_image"
     crop_size = 256
 
     crop_large_images(input_folder, output_folder, crop_size)
