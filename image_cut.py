@@ -24,8 +24,12 @@ def crop_large_images(input_folder, output_folder, crop_size):
                     count += 1
 
 if __name__ == "__main__":
-    input_folder = "input_image"
-    output_folder = "cut_image"
+
+    input_folder = "test_input"
+    output_folder = "test_output"
+
+    # input_folder = "input_image"
+    # output_folder = "cut_image"
     crop_size = 256
 
     crop_large_images(input_folder, output_folder, crop_size)

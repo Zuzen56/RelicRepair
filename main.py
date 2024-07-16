@@ -21,7 +21,7 @@ from skimage.metrics import structural_similarity
 if __name__ == '__main__':  # 只有在 main 中才能开多线程
     EPOCH = 50  # 训练次数
     BATCH_SIZE = 16  # 每批的训练数量
-    LEARNING_RATE = 0.0001  # 学习率
+    LEARNING_RATE = 0.001  # 学习率
     loss_list = []  # 损失存储数组
     best_psnr = 0  # 训练最好的峰值信噪比
     best_epoch = 0  # 峰值信噪比最好时的 epoch
