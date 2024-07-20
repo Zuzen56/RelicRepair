@@ -13,9 +13,9 @@ def apply_glitch(image, intensity=1):
             if random.random() < 0.1 * intensity:
                 data[x, y] = (0, 0, 0)
 
-input_folder_cv2 = 'trainTarget'  # 输入文件夹路径（cv2）
-output_folder_cv2 = 'trainmiddle'  # 输出文件夹路径（cv2）
-mask_folder = 'mask'  # 存放掩膜图片的文件夹路径
+input_folder_cv2 = '../data/trainTarget'  # 输入文件夹路径（cv2）
+output_folder_cv2 = '../data/trainmiddle'  # 输出文件夹路径（cv2）
+mask_folder = '../data/mask'  # 存放掩膜图片的文件夹路径
 
 mask_images = glob.glob(os.path.join(mask_folder, '*.jpg')) + glob.glob(os.path.join(mask_folder, '*.png'))
 
@@ -48,8 +48,8 @@ else:
 
     print("OpenCV处理完成！")
 
-input_folder_pil = 'trainmiddle'  # 输入文件夹路径（PIL）
-output_folder_pil = 'trainInput'  # 输出文件夹路径（PIL）
+input_folder_pil = '../data/trainmiddle'  # 输入文件夹路径（PIL）
+output_folder_pil = '../data/trainInput'  # 输出文件夹路径（PIL）
 intensity_pil = 1  # 控制破损的程度（PIL）
 
 for filename in os.listdir(input_folder_pil):

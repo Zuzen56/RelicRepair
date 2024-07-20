@@ -1,22 +1,15 @@
 import sys
 import time
-import numpy as np
-import torch
 import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
-from tqdm import tqdm, trange  # 进度条
+from tqdm import tqdm  # 进度条
 from torch.utils.data import DataLoader
 from torchvision.utils import save_image
 from torch.autograd import Variable
-from torch.optim.lr_scheduler import MultiStepLR
 from utils import *
 from NetModel import Net
 from MyDataset import *
-from skimage.metrics import peak_signal_noise_ratio
-from skimage.metrics import structural_similarity
-
-
 
 if __name__ == '__main__':  # 只有在 main 中才能开多线程
     EPOCH = 50  # 训练次数
@@ -26,13 +19,13 @@ if __name__ == '__main__':  # 只有在 main 中才能开多线程
     best_psnr = 0  # 训练最好的峰值信噪比
     best_epoch = 0  # 峰值信噪比最好时的 epoch
 
-    inputPathTrain = 'D:/PycharmProjects/RelicRepair/trainInput'  # 训练输入图片路径
-    targetPathTrain = 'D:/PycharmProjects/RelicRepair/trainTarget'  # 训练目标图片路径
+    inputPathTrain = '../data/trainInput'  # 训练输入图片路径
+    #targetPathTrain = 'D:/PycharmProjects/RelicRepair/trainTarget'  # 训练目标图片路径
+    targetPathTrain = '../data/trainTarget'  # 训练目标图片路径
+    inputPathTest = '../data/testInput'  # 测试输入图片路径
+    targetPathTest = '../data/testTarget'  # 测试目标图片路径
 
-    inputPathTest = 'D:/PycharmProjects/RelicRepair/testInput'  # 测试输入图片路径
-    targetPathTest = 'D:/PycharmProjects/RelicRepair/testTarget'  # 测试目标图片路径
-
-    resultPathTest = 'D:/PycharmProjects/RelicRepair/Output/'  # 测试结果图片路径
+    resultPathTest = '../data/Output/'  # 测试结果图片路径
 
     myNet = Net()  # 实例化网络
     myNet = myNet.cuda()  # 网络放入GPU中
@@ -59,8 +52,8 @@ if __name__ == '__main__':  # 只有在 main 中才能开多线程
 
     # 开始训练
     print('-------------------------------------------------------------------------------------------------------')
-    if os.path.exists('./model_best.pth'):  # 判断是否预训练
-        myNet.load_state_dict(torch.load('./model_best.pth'))
+    if os.path.exists('../model_best.pth'):  # 判断是否预训练
+        myNet.load_state_dict(torch.load('../model_best.pth'))
 
     for epoch in range(EPOCH):
         myNet.train()  # 指定网络模型训练状态
@@ -102,10 +95,10 @@ if __name__ == '__main__':  # 只有在 main 中才能开多线程
         if psnr_val_rgb > best_psnr:
             best_psnr = psnr_val_rgb
             best_epoch = epoch
-            torch.save(myNet.state_dict(), 'model_best.pth')
+            torch.save(myNet.state_dict(), '../model_best.pth')
 
         loss_list.append(epochLoss)  # 插入每次训练的损失值
-        torch.save(myNet.state_dict(), 'model.pth')  # 每次训练结束保存模型参数
+        torch.save(myNet.state_dict(), '../model.pth')  # 每次训练结束保存模型参数
         timeEnd = time.time()  # 每次训练结束时间
         print("------------------------------------------------------------")
         print("Epoch:  {}  Finished,  Time:  {:.4f} s,  Loss:  {:.6f}.".format(epoch + 1, timeEnd - timeStart, epochLoss))
@@ -114,7 +107,7 @@ if __name__ == '__main__':  # 只有在 main 中才能开多线程
 
     # 测试
     print('--------------------------------------------------------------')
-    myNet.load_state_dict(torch.load('./model_best.pth'))  # 加载已经训练好的模型参数
+    myNet.load_state_dict(torch.load('../model_best.pth'))  # 加载已经训练好的模型参数
     myNet.eval()  # 指定网络模型测试状态
 
     with torch.no_grad():  # 测试阶段不需要梯度
